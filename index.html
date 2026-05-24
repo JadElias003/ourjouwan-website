@@ -1,0 +1,1154 @@
+﻿<!doctype html>
+<html lang="en" data-theme="light" translate="no">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Ourjouwan Resort & Pool in Akkar, Lebanon offers poolside dining, private events, weddings, birthdays, and summer gatherings."
+    />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src https://api.open-meteo.com; object-src 'none'; base-uri 'self'; form-action 'none'; frame-src 'none'; frame-ancestors 'none'; media-src 'self'; worker-src 'none'; upgrade-insecure-requests"
+    />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta
+      http-equiv="Permissions-Policy"
+      content="camera=(), microphone=(), geolocation=(), payment=()"
+    />
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+    <meta name="theme-color" content="#0097b2" />
+    <meta name="google" content="notranslate" />
+    <meta property="og:title" content="Ourjouwan Resort & Pool" />
+    <meta
+      property="og:description"
+      content="Pool, restaurant, and private events in Akkar, Lebanon."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="logo%20ourj.jpg" />
+    <title>Ourjouwan - Resort & Pool</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Playfair+Display:ital,wght@1,400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+
+  <body data-page="home">
+    <!-- --- INITIAL LOADER --- -->
+    <div id="loader">
+      <div class="loader-mark" aria-hidden="true">
+        <div class="loader-rays">
+          <span></span><span></span><span></span><span></span> <span></span
+          ><span></span><span></span><span></span>
+        </div>
+        <div class="loader-sun"></div>
+      </div>
+      <div class="loader-text">OURJOUWAN</div>
+      <div class="loader-sub">Resort &amp; Pool - Lebanon</div>
+      <div class="loader-water"></div>
+    </div>
+
+    <!-- --- PAGE TRANSITION LOADER --- -->
+    <div id="page-loader">
+      <div class="pl-sun"></div>
+      <div class="pl-waves">
+        <div class="pl-wave-bar"></div>
+        <div class="pl-wave-bar"></div>
+        <div class="pl-wave-bar"></div>
+        <div class="pl-wave-bar"></div>
+        <div class="pl-wave-bar"></div>
+      </div>
+      <div class="pl-text" id="pl-label">Loading...</div>
+    </div>
+
+    <!-- --- NAVIGATION --- -->
+    <nav id="navbar" aria-label="Main navigation">
+      <a class="nav-logo" href="#home" data-page-link="home"
+        >Ourj<span>o</span>uwan</a
+      >
+      <ul class="nav-links">
+        <li>
+          <a
+            href="#home"
+            class="active"
+            data-page-link="home"
+            data-i18n="nav.home"
+            >Home</a
+          >
+        </li>
+        <li>
+          <a href="#menu" data-page-link="menu" data-i18n="nav.menu">Menu</a>
+        </li>
+        <li>
+          <a href="#gallery" data-page-link="gallery" data-i18n="nav.gallery"
+            >Events &amp; Gallery</a
+          >
+        </li>
+      </ul>
+      <div class="nav-right">
+        <div class="nav-widgets" id="navWidgets">
+          <div class="nav-widget weather-widget">
+            <span id="weatherIconNav" aria-hidden="true">&#9728;</span>
+            <span id="temperatureNav">--&deg;</span>
+          </div>
+          <div
+            class="nav-widget status-widget open"
+            id="statusWidget"
+            tabindex="0"
+            role="button"
+            aria-label="Opening hours"
+            data-i18n-aria-label="status.hoursLabel"
+          >
+            <span class="status-dot open-dot" id="statusDot"></span>
+            <span id="openStatus">OPEN</span>
+            <span class="hours-popover" role="tooltip">
+              <span class="hours-popover-label" data-i18n="status.hoursLabel"
+                >Opening hours</span
+              >
+              <span class="hours-popover-time">9 AM - 7 PM</span>
+            </span>
+          </div>
+          <a
+            class="nav-widget location-widget"
+            href="https://maps.google.com/?q=34.52155565803008,36.07189484159277"
+            data-venue-map-link
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              width="15"
+              height="15"
+            >
+              <path
+                d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"
+                fill="currentColor"
+              />
+            </svg>
+            <span data-i18n="nav.directions">Directions</span>
+          </a>
+        </div>
+        <div class="lang-switch" role="group" aria-label="Language">
+          <button type="button" data-lang-switch="en" aria-pressed="true">
+            EN
+          </button>
+          <button type="button" data-lang-switch="ar" aria-pressed="false">
+            AR
+          </button>
+        </div>
+        <button
+          class="theme-btn"
+          data-theme-toggle
+          aria-label="Toggle dark mode"
+          data-i18n-aria-label="theme.toggle"
+          aria-pressed="false"
+          type="button"
+        >
+          <span class="theme-icon sun" aria-hidden="true">
+            <svg viewBox="0 0 24 24" focusable="false">
+              <circle cx="12" cy="12" r="4" />
+              <path
+                d="M12 2v2.5M12 19.5V22M4.93 4.93 6.7 6.7M17.3 17.3l1.77 1.77M2 12h2.5M19.5 12H22M4.93 19.07 6.7 17.3M17.3 6.7l1.77-1.77"
+              />
+            </svg>
+          </span>
+          <span class="theme-icon moon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" focusable="false">
+              <path
+                d="M20.2 14.4A7.8 7.8 0 0 1 9.6 3.8 8.6 8.6 0 1 0 20.2 14.4Z"
+              />
+            </svg>
+          </span>
+        </button>
+        <button
+          class="hamburger"
+          id="hamburger"
+          data-menu-toggle
+          aria-label="Open navigation menu"
+          aria-controls="mobileMenu"
+          aria-expanded="false"
+        >
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- --- MOBILE WIDGETS BAR --- -->
+    <div class="nav-widgets" id="mobileWidgets" style="display: none">
+      <div class="nav-widget weather-widget">
+        <span id="weatherIconNavM" aria-hidden="true">&#9728;</span>
+        <span id="temperatureNavM">--&deg;</span>
+      </div>
+      <div
+        class="nav-widget status-widget open"
+        id="statusWidgetM"
+        tabindex="0"
+        role="button"
+        aria-label="Opening hours"
+        data-i18n-aria-label="status.hoursLabel"
+      >
+        <span class="status-dot open-dot" id="statusDotM"></span>
+        <span id="openStatusM">OPEN</span>
+        <span class="hours-popover" role="tooltip">
+          <span class="hours-popover-label" data-i18n="status.hoursLabel"
+            >Opening hours</span
+          >
+          <span class="hours-popover-time">9 AM - 7 PM</span>
+        </span>
+      </div>
+      <a
+        class="nav-widget location-widget"
+        href="https://maps.google.com/?q=34.52155565803008,36.07189484159277"
+        data-venue-map-link
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          width="14"
+          height="14"
+        >
+          <path
+            d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"
+            fill="currentColor"
+          />
+        </svg>
+        <span data-i18n="nav.directions">Directions</span>
+      </a>
+    </div>
+
+    <!-- --- MOBILE MENU --- -->
+    <div class="mobile-menu" id="mobileMenu" aria-label="Mobile navigation">
+      <a href="#home" data-page-link="home" data-i18n="nav.home">Home</a>
+      <a href="#menu" data-page-link="menu" data-i18n="nav.menu">Menu</a>
+      <a href="#gallery" data-page-link="gallery" data-i18n="nav.gallery"
+        >Events &amp; Gallery</a
+      >
+      <div class="mobile-lang-row">
+        <span data-i18n="language.label">Language</span>
+        <div class="lang-switch" role="group" aria-label="Language">
+          <button type="button" data-lang-switch="en" aria-pressed="true">
+            EN
+          </button>
+          <button type="button" data-lang-switch="ar" aria-pressed="false">
+            AR
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="language-prompt" id="languagePrompt" aria-hidden="true">
+      <div
+        class="language-prompt-dialog"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="languagePromptTitle"
+      >
+        <div class="language-prompt-mark" aria-hidden="true">
+          <span>En</span>
+          <span>ع</span>
+        </div>
+        <div class="language-prompt-kicker" data-language-prompt-kicker>
+          Language
+        </div>
+        <h2 id="languagePromptTitle" data-language-prompt-title>
+          Choose your preferred language
+        </h2>
+        <p data-language-prompt-desc>
+          We will show the site in the language you choose
+        </p>
+        <div class="language-prompt-actions">
+          <button type="button" data-language-prompt-choice="en">
+            <span>English</span>
+          </button>
+          <button type="button" data-language-prompt-choice="ar" dir="rtl">
+            <span>العربية</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ------------------------------------------------------- -->
+    <!-- --------------- HOME PAGE --------------------------- -->
+    <!-- ------------------------------------------------------- -->
+    <div class="page active" id="page-home">
+      <section class="hero">
+        <div class="hero-bg">
+          <!-- CELESTIAL SYSTEM -->
+          <div class="celestial-wrap">
+            <!-- SUN -->
+            <div class="hero-sun">
+              <div class="sun-glow"></div>
+              <div class="sun-core"></div>
+            </div>
+
+            <!-- MOON -->
+            <div class="hero-moon">
+              <div class="moon-glow"></div>
+              <div class="moon-core"></div>
+            </div>
+          </div>
+        </div>
+        <div class="bubbles" id="bubbles"></div>
+        <div class="hero-content">
+          <div class="hero-img-wrap">
+            <img src="logo ourj.jpg" alt="Ourjouwan Resort & Pool" />
+          </div>
+          <div class="hero-name">Ourj<em>o</em>uwan</div>
+          <div class="hero-tagline" data-i18n="hero.tagline">
+            Resort &amp; Pool - Restaurant
+          </div>
+          <div class="live-atmosphere" id="liveAtmosphere">
+            Perfect Pool Weather Today
+          </div>
+          <div
+            class="hero-tagline"
+            style="margin-top: 8px"
+            data-i18n="hero.since"
+          >
+            Since 2005
+          </div>
+          <div class="hero-divider"></div>
+          <div class="hero-cta">
+            <button
+              class="btn-primary"
+              data-page-link="menu"
+              data-loader-label="Preparing The Menu..."
+            >
+              <span data-i18n="hero.viewMenu">View Menu</span>
+            </button>
+            <button
+              class="btn-outline"
+              data-page-link="gallery"
+              data-loader-label="Opening Events gallery..."
+            >
+              <span data-i18n="hero.eventsGallery">Events &amp; Gallery</span>
+            </button>
+          </div>
+        </div>
+        <div class="wave-wrap">
+          <div class="wave wave1"></div>
+          <div class="wave wave2"></div>
+        </div>
+      </section>
+
+      <section class="guest-reel reveal" aria-labelledby="guestReelTitle">
+        <div class="guest-reel-copy">
+          <div class="section-label">Guest Moments</div>
+          <h2 class="guest-reel-title" id="guestReelTitle">
+            Pick the mood,<br />feel the day.
+          </h2>
+          <p class="guest-reel-desc">
+            A quick look at the moments guests settle into: poolside bites,
+            shisha, golden swims, and celebrations by the water.
+          </p>
+          <div
+            class="guest-moment-tabs"
+            role="tablist"
+            aria-label="Guest moment reel"
+          >
+            <button
+              class="guest-moment-tab active"
+              type="button"
+              role="tab"
+              aria-selected="true"
+              aria-controls="moment-food"
+              data-moment-target="food"
+            >
+              Food
+            </button>
+            <button
+              class="guest-moment-tab"
+              type="button"
+              role="tab"
+              aria-selected="false"
+              aria-controls="moment-shisha"
+              data-moment-target="shisha"
+            >
+              Shisha
+            </button>
+            <button
+              class="guest-moment-tab"
+              type="button"
+              role="tab"
+              aria-selected="false"
+              aria-controls="moment-sunset"
+              data-moment-target="sunset"
+            >
+              Sunset
+            </button>
+            <button
+              class="guest-moment-tab"
+              type="button"
+              role="tab"
+              aria-selected="false"
+              aria-controls="moment-events"
+              data-moment-target="events"
+            >
+              Events
+            </button>
+          </div>
+        </div>
+
+        <div class="guest-reel-stage">
+          <article
+            class="guest-moment-panel active"
+            id="moment-food"
+            role="tabpanel"
+            data-moment-panel="food"
+          >
+            <img
+              src="two.jpeg"
+              alt="Poolside food and drinks at Ourjouwan"
+              loading="lazy"
+              decoding="async"
+            />
+            <div class="guest-moment-caption">
+              <span>Poolside Bites</span>
+              <h3>Poolside bites between swims.</h3>
+              <p>
+                Cold drinks, fries, burgers, and plates made for long summer
+                days.
+              </p>
+            </div>
+          </article>
+          <article
+            class="guest-moment-panel"
+            id="moment-shisha"
+            role="tabpanel"
+            data-moment-panel="shisha"
+            hidden
+          >
+            <img
+              src="one.jpeg"
+              alt="Shisha and relaxed poolside seating at Ourjouwan"
+              loading="lazy"
+              decoding="async"
+            />
+            <div class="guest-moment-caption">
+              <span>Shisha Lounge</span>
+              <h3>Slow afternoons by the water.</h3>
+              <p>
+                Settle into the view with shisha, drinks, and easy poolside
+                conversation.
+              </p>
+            </div>
+          </article>
+          <article
+            class="guest-moment-panel"
+            id="moment-sunset"
+            role="tabpanel"
+            data-moment-panel="sunset"
+            hidden
+          >
+            <img
+              src="three.jpeg"
+              alt="Golden hour pool moment at Ourjouwan"
+              loading="lazy"
+              decoding="async"
+            />
+            <div class="guest-moment-caption">
+              <span>Golden Swim</span>
+              <h3>Golden hour hits different here.</h3>
+              <p>
+                Cooler air, softer light, and the kind of evening that keeps
+                people staying longer.
+              </p>
+            </div>
+          </article>
+          <article
+            class="guest-moment-panel"
+            id="moment-events"
+            role="tabpanel"
+            data-moment-panel="events"
+            hidden
+          >
+            <img
+              src="four.jpeg"
+              alt="Celebration setup near the pool at Ourjouwan"
+              loading="lazy"
+              decoding="async"
+            />
+            <div class="guest-moment-caption">
+              <span>Celebrations</span>
+              <h3>Turn the pool into the occasion.</h3>
+              <p>
+                Birthdays, gatherings, and private moments framed by water,
+                food, and summer energy.
+              </p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="home-features">
+        <div class="section-label reveal">Experience</div>
+        <h2 class="section-title reveal reveal-delay-1">
+          Where the <em>water</em><br />meets the table
+        </h2>
+        <p class="section-desc reveal reveal-delay-2">
+          Ourjouwan is a haven of relaxation and fine dining in Lebanon, where
+          crystal waters, summer sun, and exceptional cuisine come together in
+          one unforgettable setting.
+        </p>
+        <div class="features-grid">
+          <div class="feature-card reveal reveal-delay-1">
+            <div class="feature-icon">
+              <svg viewBox="0 0 24 24">
+                <path d="M3 16c2 0 2-2 4-2s2 2 4 2 2-2 4-2 2 2 4 2 2-2 4-2" />
+                <path d="M7 10V6a2 2 0 1 1 4 0v4" />
+              </svg>
+            </div>
+            <div class="feature-title">Infinity Pool</div>
+            <p class="feature-desc">
+              Our signature pool blends seamlessly with the horizon, creating a
+              resort experience like no other in Lebanon.
+            </p>
+          </div>
+          <div class="feature-card reveal reveal-delay-2">
+            <div class="feature-icon">
+              <svg viewBox="0 0 24 24">
+                <path d="M8 3v9" />
+                <path d="M6 3v5" />
+                <path d="M10 3v5" />
+                <path d="M18 3v18" />
+              </svg>
+            </div>
+            <div class="feature-title">Poolside Dining</div>
+            <p class="feature-desc">
+              Fresh mezze, grilled seafood, and craft cocktails delivered to
+              your sun lounger or table by the water.
+            </p>
+          </div>
+          <div class="feature-card reveal reveal-delay-3">
+            <div class="feature-icon">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M12 3l2.5 5L20 9l-4 4 .9 5L12 15l-4.9 3 .9-5-4-4 5.5-1L12 3z"
+                />
+              </svg>
+            </div>
+            <div class="feature-title">Private Events</div>
+            <p class="feature-desc">
+              Weddings, birthdays, corporate gatherings: we craft unforgettable
+              experiences tailored to your vision.
+            </p>
+          </div>
+          <div class="feature-card reveal reveal-delay-4">
+            <div class="feature-icon">
+              <svg viewBox="0 0 24 24">
+                <path d="M3 16h18" />
+                <path d="M7 16a5 5 0 0 1 10 0" />
+                <path d="M12 3v3" />
+              </svg>
+            </div>
+            <div class="feature-title">Sunset Sessions</div>
+            <p class="feature-desc">
+              Sunset pool parties, live DJs, vibrant evenings, and unforgettable
+              summer energy by the water every weekend.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="atmosphere-strip reveal">
+        <div class="atmosphere-gallery">
+          <img
+            src="one.jpeg"
+            class="atm-photo atm-photo-1"
+            alt=""
+            loading="lazy"
+            decoding="async"
+          />
+          <img
+            src="two.jpeg"
+            class="atm-photo atm-photo-2"
+            alt=""
+            loading="lazy"
+            decoding="async"
+          />
+          <img
+            src="three.jpeg"
+            class="atm-photo atm-photo-3"
+            alt=""
+            loading="lazy"
+            decoding="async"
+          />
+          <img
+            src="four.jpeg"
+            class="atm-photo atm-photo-4"
+            alt=""
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+        <div class="atmosphere-glow"></div>
+
+        <div class="atmosphere-inner">
+          <div class="atmosphere-label">WATER GAMES &amp; POOL FUN</div>
+
+          <h2 class="atmosphere-title">
+            Where splashes turn<br />
+            into summer stories.
+          </h2>
+
+          <p class="atmosphere-copy">
+            Slides, pool games, floating challenges, and all-day water play made
+            for families, friends, and every sun-soaked celebration.
+          </p>
+        </div>
+      </section>
+
+      <footer>
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <span class="nav-logo">Ourj<span>o</span>uwan</span>
+            <p>
+              A destination of sun, water, and exceptional taste in the heart of
+              Lebanon.
+            </p>
+          </div>
+          <div>
+            <div class="footer-col-title">Navigate</div>
+            <ul class="footer-links">
+              <li>
+                <a href="#home" data-page-link="home">Home</a>
+              </li>
+              <li>
+                <a href="#menu" data-page-link="menu">Menu</a>
+              </li>
+              <li>
+                <a href="#gallery" data-page-link="gallery"
+                  >Events &amp; Gallery</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div>
+            <div class="footer-col-title">Visit Us</div>
+            <ul class="footer-links">
+              <li>
+                <a
+                  href="https://maps.google.com/?q=34.52155565803008,36.07189484159277"
+                  data-venue-map-link
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >Akkar, Lebanon</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div>
+            <div class="footer-col-title">Follow</div>
+            <ul class="footer-links">
+              <li><span>Instagram</span></li>
+              <li><span>TikTok</span></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <span>&copy; 2026 Ourjouwan Resort &amp; Pool - Lebanon</span>
+        </div>
+      </footer>
+    </div>
+    <!-- /page-home -->
+
+    <!-- ------------------------------------------------------- -->
+    <!-- --------------- MENU PAGE ---------------------------- -->
+    <!-- ------------------------------------------------------- -->
+    <div class="page" id="page-menu">
+      <div class="menu-hero">
+        <div class="menu-hero-inner">
+          <div class="section-label" data-i18n="menu.eyebrow">Culinary</div>
+          <h1 class="section-title" data-i18n="menu.title">Our Menu</h1>
+          <p class="section-desc" data-i18n="menu.desc">
+            Fresh, seasonal, and crafted with care, from classic Lebanese mezze
+            to poolside bites and signature cocktails.
+          </p>
+        </div>
+      </div>
+
+      <div class="menu-tabs" id="menuTabBar" aria-label="Menu categories"></div>
+
+      <div class="menu-tools" aria-label="Menu search and filters">
+        <label class="menu-search" for="menuSearch">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="11" cy="11" r="7" />
+            <path d="m16.5 16.5 4 4" />
+          </svg>
+          <input
+            id="menuSearch"
+            type="search"
+            placeholder="Search the menu"
+            data-i18n-placeholder="menu.search"
+            autocomplete="off"
+          />
+        </label>
+        <div class="menu-filter-chips" aria-label="Filter menu items">
+          <button
+            class="filter-chip active"
+            type="button"
+            data-menu-filter="all"
+          >
+            <span data-i18n="filters.all">All</span>
+          </button>
+          <button class="filter-chip" type="button" data-menu-filter="plate">
+            <span data-i18n="filters.plate">Plates</span>
+          </button>
+          <button
+            class="filter-chip"
+            type="button"
+            data-menu-filter="sandwiches"
+          >
+            <span data-i18n="filters.sandwiches">Sandwiches</span>
+          </button>
+          <button class="filter-chip" type="button" data-menu-filter="salad">
+            <span data-i18n="filters.salad">Salads</span>
+          </button>
+          <button
+            class="filter-chip"
+            type="button"
+            data-menu-filter="appetizers"
+          >
+            <span data-i18n="filters.appetizers">Appetizers</span>
+          </button>
+          <button class="filter-chip" type="button" data-menu-filter="sweet">
+            <span data-i18n="filters.sweet">Sweets</span>
+          </button>
+        </div>
+      </div>
+
+      <p
+        class="menu-results-count"
+        id="menuResultsCount"
+        aria-live="polite"
+      ></p>
+      <div class="menu-empty" id="menuEmpty" hidden>
+        <span data-i18n="menu.empty">No menu items match that search.</span>
+      </div>
+
+      <div id="menuSections" class="menu-sections" aria-live="polite"></div>
+
+      <footer>
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <span class="nav-logo">Ourj<span>o</span>uwan</span>
+            <p>
+              A destination of sun, water, and exceptional taste in the heart of
+              Lebanon.
+            </p>
+          </div>
+          <div>
+            <div class="footer-col-title">Navigate</div>
+            <ul class="footer-links">
+              <li>
+                <a href="#home" data-page-link="home">Home</a>
+              </li>
+              <li>
+                <a href="#menu" data-page-link="menu">Menu</a>
+              </li>
+              <li>
+                <a href="#gallery" data-page-link="gallery"
+                  >Events &amp; Gallery</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div>
+            <div class="footer-col-title">Visit Us</div>
+            <ul class="footer-links">
+              <li>
+                <a
+                  href="https://maps.google.com/?q=34.52155565803008,36.07189484159277"
+                  data-venue-map-link
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >Akkar, Lebanon</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div>
+            <div class="footer-col-title">Follow</div>
+            <ul class="footer-links">
+              <li><span>Instagram</span></li>
+              <li><span>Facebook</span></li>
+              <li><span>TikTok</span></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <span>&copy; 2026 Ourjouwan Resort &amp; Pool - Lebanon</span>
+        </div>
+      </footer>
+    </div>
+    <!-- /page-menu -->
+
+    <!-- ------------------------------------------------------- -->
+    <!-- --------------- GALLERY / EVENTS PAGE ---------------- -->
+    <!-- ------------------------------------------------------- -->
+    <div class="page" id="page-gallery">
+      <div class="gallery-hero">
+        <div class="gallery-hero-inner">
+          <div class="section-label">Events &amp; Moments</div>
+          <h1 class="section-title">Where memories<br /><em>are made</em></h1>
+          <p class="section-desc">
+            From intimate weddings to grand celebrations, Ourjouwan transforms
+            any occasion into an extraordinary experience.
+          </p>
+        </div>
+      </div>
+
+      <div class="events-grid">
+        <!-- WEDDINGS -->
+        <div class="event-stack-card reveal">
+          <div class="event-stack-header">
+            <div>
+              <div class="event-stack-label">Elegant Celebrations</div>
+              <div class="event-stack-title">Weddings</div>
+            </div>
+            <div class="event-stack-icon">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M12 21s-7-4.35-7-11a4 4 0 0 1 7-2.65A4 4 0 0 1 19 10c0 6.65-7 11-7 11z"
+                />
+              </svg>
+            </div>
+          </div>
+          <div
+            class="photo-stack"
+            role="button"
+            tabindex="0"
+            aria-label="Open wedding gallery"
+            data-gallery-name="Weddings"
+          >
+            <img
+              src="1.png"
+              class="stack-photo active"
+              alt="Wedding table setup beside the pool"
+              loading="lazy"
+              decoding="async"
+            />
+            <img
+              src="2.png"
+              class="stack-photo"
+              alt="Wedding celebration at Ourjouwan"
+              loading="lazy"
+              decoding="async"
+            />
+            <img
+              src="3.png"
+              class="stack-photo"
+              alt="Outdoor wedding details at Ourjouwan"
+              loading="lazy"
+              decoding="async"
+            />
+            <img
+              src="4.png"
+              class="stack-photo"
+              alt="Poolside wedding moment"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+          <p class="event-stack-desc">
+            Luxury waterfront weddings with sunset ambiance, gourmet dining,
+            floral staging, and unforgettable moments.
+          </p>
+        </div>
+
+        <!-- PARTIES -->
+        <div class="event-stack-card reveal reveal-delay-1">
+          <div class="event-stack-header">
+            <div>
+              <div class="event-stack-label">Summer Vibes</div>
+              <div class="event-stack-title">Parties</div>
+            </div>
+            <div class="event-stack-icon">
+              <svg viewBox="0 0 24 24">
+                <path d="M7 3v18M17 3v18M7 8h10M7 16h10" />
+              </svg>
+            </div>
+          </div>
+          <div
+            class="photo-stack"
+            role="button"
+            tabindex="0"
+            aria-label="Open parties gallery"
+            data-gallery-name="Parties"
+          >
+            <img
+              src="5.png"
+              class="stack-photo active"
+              alt="Poolside party atmosphere"
+              loading="lazy"
+              decoding="async"
+            />
+            <img
+              src="1.png"
+              class="stack-photo"
+              alt="Evening celebration setup"
+              loading="lazy"
+              decoding="async"
+            />
+            <img
+              src="2.png"
+              class="stack-photo"
+              alt="Outdoor party space at Ourjouwan"
+              loading="lazy"
+              decoding="async"
+            />
+            <img
+              src="3.png"
+              class="stack-photo"
+              alt="Summer gathering by the water"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+          <p class="event-stack-desc">
+            Poolside celebrations, DJs, cocktails, lights, and unforgettable
+            nights with your closest people.
+          </p>
+        </div>
+
+        <!-- PROM -->
+        <div class="event-stack-card reveal reveal-delay-2">
+          <div class="event-stack-header">
+            <div>
+              <div class="event-stack-label">Senior Memories</div>
+              <div class="event-stack-title">Prom</div>
+            </div>
+            <div class="event-stack-icon">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M12 3l2.5 5L20 9l-4 4 .9 5L12 15l-4.9 3 .9-5-4-4 5.5-1L12 3z"
+                />
+              </svg>
+            </div>
+          </div>
+          <div
+            class="photo-stack"
+            role="button"
+            tabindex="0"
+            aria-label="Open prom gallery"
+            data-gallery-name="Prom"
+          >
+            <img
+              src="Assginment(1).png"
+              class="stack-photo active"
+              alt="Prom event setup at Ourjouwan"
+              loading="lazy"
+              decoding="async"
+            />
+            <img
+              src="4.png"
+              class="stack-photo"
+              alt="Prom celebration detail"
+              loading="lazy"
+              decoding="async"
+            />
+            <img
+              src="5.png"
+              class="stack-photo"
+              alt="Students celebrating by the pool"
+              loading="lazy"
+              decoding="async"
+            />
+            <img
+              src="2.png"
+              class="stack-photo"
+              alt="Prom night gathering space"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+          <p class="event-stack-desc">
+            Celebrate the final school year with a premium prom night by the
+            water, surrounded by lights, music, and memories.
+          </p>
+        </div>
+      </div>
+
+      <!-- WHATSAPP CTA -->
+      <div
+        style="
+          text-align: center;
+          padding: 48px 20px 80px;
+          background: var(--c-surface);
+          border-top: 1px solid var(--c-border);
+        "
+      >
+        <p class="section-label" style="justify-content: center; display: flex">
+          Book an Event
+        </p>
+        <h2 class="section-title" style="font-size: clamp(1.8rem, 4vw, 2.8rem)">
+          Planning something special?
+        </h2>
+        <p
+          style="
+            color: var(--c-muted);
+            margin: 12px auto 36px;
+            max-width: 480px;
+            font-size: 0.95rem;
+            line-height: 1.7;
+          "
+        >
+          Contact our events team via WhatsApp and let us help you create an
+          unforgettable experience at Ourjouwan.
+        </p>
+        <a
+          href="https://wa.me/96176178787?text=Hello%2C%20I%27d%20like%20to%20inquire%20about%20booking%20an%20event%20at%20Ourjouwan%20Resort%20%26%20Pool."
+          target="_blank"
+          rel="noopener noreferrer"
+          data-venue-event-whatsapp-link
+          class="btn-whatsapp"
+        >
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"
+            />
+          </svg>
+          Chat on WhatsApp
+        </a>
+      </div>
+
+      <footer>
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <span class="nav-logo">Ourj<span>o</span>uwan</span>
+            <p>
+              A destination of sun, water, and exceptional taste in the heart of
+              Lebanon.
+            </p>
+          </div>
+          <div>
+            <div class="footer-col-title">Navigate</div>
+            <ul class="footer-links">
+              <li>
+                <a href="#home" data-page-link="home">Home</a>
+              </li>
+              <li>
+                <a href="#menu" data-page-link="menu">Menu</a>
+              </li>
+              <li>
+                <a href="#gallery" data-page-link="gallery"
+                  >Events &amp; Gallery</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div>
+            <div class="footer-col-title">Events</div>
+            <ul class="footer-links">
+              <li>
+                <a
+                  href="https://wa.me/96176178787"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  data-venue-whatsapp-link
+                  >WhatsApp Booking</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <span>&copy; 2026 Ourjouwan Resort &amp; Pool - Lebanon</span>
+        </div>
+      </footer>
+    </div>
+    <!-- /page-gallery -->
+
+    <!-- --- MOBILE DOCK --- -->
+    <div class="mobile-resort-dock" aria-label="Mobile quick navigation">
+      <button
+        class="dock-btn"
+        type="button"
+        data-page-link="home"
+        title="Home"
+        aria-label="Home"
+        data-dock-page="home"
+      >
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M4 10.5 12 4l8 6.5" />
+          <path d="M6.5 9.5V20h11V9.5" />
+          <path d="M10 20v-5h4v5" />
+        </svg>
+      </button>
+      <button
+        class="dock-btn"
+        type="button"
+        data-page-link="menu"
+        title="Menu"
+        aria-label="Menu"
+        data-dock-page="menu"
+      >
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M7 3v8" />
+          <path d="M4.8 3v3.8c0 2.1 1 3.2 2.2 3.2s2.2-1.1 2.2-3.2V3" />
+          <path d="M7 11v10" />
+          <path d="M15 3v18" />
+          <path d="M15 3c3 1 4.5 3.4 4.5 6.5H15" />
+        </svg>
+      </button>
+      <button
+        class="dock-btn"
+        type="button"
+        data-page-link="gallery"
+        title="Events"
+        aria-label="Events"
+        data-dock-page="gallery"
+      >
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M7 3v4" />
+          <path d="M17 3v4" />
+          <rect x="4" y="5" width="16" height="15" rx="3" />
+          <path d="M4 10h16" />
+          <path d="m9 15 2 2 4-4" />
+        </svg>
+      </button>
+      <a
+        class="dock-btn"
+        href="https://wa.me/96176178787"
+        target="_blank"
+        rel="noopener noreferrer"
+        data-venue-whatsapp-link
+        title="WhatsApp"
+        aria-label="WhatsApp"
+      >
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M4.5 19.5 5.7 16A8 8 0 1 1 9 19.2l-4.5.3Z" />
+          <path
+            d="M9.2 8.6c.4 2 2.1 3.8 4.1 4.5l1.3-1.2 2.1.6c.2 1-.1 1.9-.9 2.4-3.5.4-7.2-2.9-8-6.2.4-.8 1.2-1.2 2.1-1l.7 2-1.4 1.1Z"
+          />
+        </svg>
+      </a>
+      <a
+        class="dock-btn"
+        href="https://maps.google.com/?q=34.52155565803008,36.07189484159277"
+        target="_blank"
+        rel="noopener noreferrer"
+        data-venue-map-link
+        title="Map"
+        aria-label="Map"
+      >
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 21s6-5.4 6-11a6 6 0 1 0-12 0c0 5.6 6 11 6 11Z" />
+          <circle cx="12" cy="10" r="2.2" />
+        </svg>
+      </a>
+    </div>
+
+    <script src="script.js" defer></script>
+  </body>
+</html>
