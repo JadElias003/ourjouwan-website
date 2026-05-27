@@ -16,12 +16,24 @@ const VENUE = {
     "Hello, I'd like to inquire about booking an event at Ourjouwan Resort & Pool.",
 };
 
+const SANITY = window.SANITY_PUBLIC || {};
+const SANITY_READY = Boolean(SANITY.projectId && SANITY.dataset);
+
 VENUE.whatsappUrl = `https://wa.me/${VENUE.phone}`;
 VENUE.eventWhatsappUrl = `${VENUE.whatsappUrl}?text=${encodeURIComponent(
   VENUE.eventMessage,
 )}`;
 VENUE.mapUrl = `https://maps.google.com/?q=${VENUE.latitude},${VENUE.longitude}`;
 VENUE.weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${VENUE.weatherLatitude}&longitude=${VENUE.weatherLongitude}&current_weather=true`;
+
+function refreshVenueUrls() {
+  VENUE.whatsappUrl = `https://wa.me/${VENUE.phone}`;
+  VENUE.eventWhatsappUrl = `${VENUE.whatsappUrl}?text=${encodeURIComponent(
+    VENUE.eventMessage,
+  )}`;
+  VENUE.mapUrl = `https://maps.google.com/?q=${VENUE.latitude},${VENUE.longitude}`;
+  VENUE.weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${VENUE.weatherLatitude}&longitude=${VENUE.weatherLongitude}&current_weather=true`;
+}
 
 window.addEventListener("load", () => {
   const loader = document.getElementById("loader");
@@ -97,7 +109,11 @@ function showPage(page) {
 
   // reset menu tabs
   if (page === "menu") {
-    switchTab("sandwiches", document.querySelector('[data-tab="sandwiches"]'));
+    const firstMenuTab = MENU_CATEGORIES.find((category) => !category.hidden);
+    switchTab(
+      firstMenuTab?.id || "sandwiches",
+      document.querySelector(`[data-tab="${firstMenuTab?.id || "sandwiches"}"]`),
+    );
   }
 
   requestAnimationFrame(() => {
@@ -178,6 +194,325 @@ function setStoredValue(storage, key, value) {
     storage.setItem(key, value);
   } catch {
     // Storage can be unavailable in private browsing or strict browser modes.
+  }
+}
+
+// ─────────────────────────────────────────────
+// SANITY CONTENT
+// ─────────────────────────────────────────────
+
+function sanityQueryUrl(query) {
+  const host = SANITY.useCdn === false ? "api" : "apicdn";
+  const base = `https://${SANITY.projectId}.${host}.sanity.io/v${SANITY.apiVersion || "2025-05-01"}/data/query/${SANITY.dataset}`;
+  const url = `${base}?query=${encodeURIComponent(query)}`;
+  sanityDebug("Sanity query URL built", {
+    host,
+    useCdn: SANITY.useCdn,
+    projectId: SANITY.projectId,
+    dataset: SANITY.dataset,
+    url,
+  });
+  return url;
+}
+
+function sanityDebug(...args) {
+  if (typeof console === "undefined") return;
+  if (console.debug) {
+    console.debug("[Sanity Debug]", ...args);
+  } else {
+    console.log("[Sanity Debug]", ...args);
+  }
+}
+
+function localizedValue(value) {
+  if (!value) return "";
+  if (typeof value === "string") return value;
+  return value[currentLanguage] || value.en || value.ar || "";
+}
+
+function applyLocalizedCopy(target, key, value) {
+  if (!value || typeof value !== "object") return;
+  if (value.en) target.en[key] = value.en;
+  if (value.ar) target.ar[key] = value.ar;
+}
+
+function imageUrl(value) {
+  if (!value) return "";
+  if (typeof value === "string") return value;
+  return value.imageUrl || value.url || "";
+}
+
+function imageAlt(value, fallback = "") {
+  return localizedValue(value?.alt) || fallback;
+}
+
+function applyImage(selector, value, fallbackAlt = "", root = document) {
+  const url = imageUrl(value);
+  if (!url) return;
+  const img = root.querySelector(selector);
+  if (!img) return;
+  img.src = url;
+  const alt = imageAlt(value, fallbackAlt);
+  if (alt) img.alt = alt;
+}
+
+function applySanityImages(settings) {
+  applyImage(".hero-img-wrap img", settings.hero?.logoImageUrl);
+
+  if (Array.isArray(settings.guestMoments?.moments)) {
+    const panels = document.querySelectorAll("[data-moment-panel]");
+    settings.guestMoments.moments.forEach((moment, index) => {
+      if (!moment?.imageUrl) return;
+      const panel = panels[index];
+      if (!panel) return;
+      const img = panel.querySelector("img");
+      if (!img) return;
+      img.src = moment.imageUrl;
+      const alt = localizedValue(moment.imageAlt) || localizedValue(moment.title);
+      if (alt) img.alt = alt;
+    });
+  }
+
+  if (Array.isArray(settings.atmosphereImages)) {
+    const images = document.querySelectorAll(".atmosphere-gallery img");
+    settings.atmosphereImages.forEach((item, index) => {
+      const url = imageUrl(item);
+      const img = images[index];
+      if (!url || !img) return;
+      img.src = url;
+      const alt = imageAlt(item);
+      if (alt) img.alt = alt;
+    });
+  }
+
+  if (Array.isArray(settings.gallery?.eventCards)) {
+    const cards = document.querySelectorAll(".event-stack-card");
+    settings.gallery.eventCards.forEach((event, cardIndex) => {
+      const card = cards[cardIndex];
+      if (!card || !Array.isArray(event.photos)) return;
+      const images = card.querySelectorAll(".stack-photo");
+      event.photos.forEach((photo, photoIndex) => {
+        const url = imageUrl(photo);
+        const img = images[photoIndex];
+        if (!url || !img) return;
+        img.src = url;
+        const alt = imageAlt(photo, localizedValue(event.title));
+        if (alt) img.alt = alt;
+      });
+    });
+  }
+}
+
+function applySanitySiteSettings(settings) {
+  if (!settings) return;
+
+  if (settings.venue) {
+    Object.assign(VENUE, {
+      name: settings.venue.name || VENUE.name,
+      phone: settings.venue.phone || VENUE.phone,
+      latitude: settings.venue.latitude ?? VENUE.latitude,
+      longitude: settings.venue.longitude ?? VENUE.longitude,
+      weatherLatitude:
+        settings.venue.weatherLatitude ?? settings.venue.latitude ?? VENUE.weatherLatitude,
+      weatherLongitude:
+        settings.venue.weatherLongitude ?? settings.venue.longitude ?? VENUE.weatherLongitude,
+      openingMinutes:
+        settings.venue.openingMinutes ?? VENUE.openingMinutes,
+      closingMinutes:
+        settings.venue.closingMinutes ?? VENUE.closingMinutes,
+      hoursLabel: settings.venue.hoursLabel || VENUE.hoursLabel,
+      eventMessage: settings.venue.eventMessage || VENUE.eventMessage,
+    });
+    refreshVenueUrls();
+  }
+
+  (settings.navigation || []).forEach((item) => {
+    if (!item?.page) return;
+    applyLocalizedCopy(I18N, `nav.${item.page}`, item.label);
+  });
+
+  applyLocalizedCopy(I18N, "hero.tagline", settings.hero?.tagline);
+  applyLocalizedCopy(I18N, "hero.since", settings.hero?.since);
+  applyLocalizedCopy(I18N, "hero.viewMenu", settings.hero?.primaryCta);
+  applyLocalizedCopy(I18N, "hero.eventsGallery", settings.hero?.secondaryCta);
+
+  applyLocalizedCopy(I18N, "menu.eyebrow", settings.menuIntro?.eyebrow);
+  applyLocalizedCopy(I18N, "menu.title", settings.menuIntro?.title);
+  applyLocalizedCopy(I18N, "menu.desc", settings.menuIntro?.description);
+
+  const en = SECTION_COPY.en;
+  const ar = SECTION_COPY.ar;
+  applyLocalizedCopy(SECTION_COPY, "guestLabel", settings.guestMoments?.label);
+  applyLocalizedCopy(SECTION_COPY, "guestTitle", settings.guestMoments?.title);
+  applyLocalizedCopy(SECTION_COPY, "guestDesc", settings.guestMoments?.description);
+
+  if (Array.isArray(settings.guestMoments?.moments)) {
+    en.moments = settings.guestMoments.moments.map((item) => item.label?.en).filter(Boolean);
+    ar.moments = settings.guestMoments.moments.map((item) => item.label?.ar).filter(Boolean);
+    en.captions = settings.guestMoments.moments
+      .map((item) => [item.kicker?.en, item.title?.en, item.description?.en])
+      .filter((item) => item.some(Boolean));
+    ar.captions = settings.guestMoments.moments
+      .map((item) => [item.kicker?.ar, item.title?.ar, item.description?.ar])
+      .filter((item) => item.some(Boolean));
+  }
+
+  applyLocalizedCopy(SECTION_COPY, "experienceLabel", settings.experience?.label);
+  applyLocalizedCopy(SECTION_COPY, "experienceTitle", settings.experience?.title);
+  applyLocalizedCopy(SECTION_COPY, "experienceDesc", settings.experience?.description);
+  if (Array.isArray(settings.experience?.features)) {
+    en.features = settings.experience.features
+      .map((item) => [item.title?.en, item.description?.en])
+      .filter((item) => item.some(Boolean));
+    ar.features = settings.experience.features
+      .map((item) => [item.title?.ar, item.description?.ar])
+      .filter((item) => item.some(Boolean));
+  }
+
+  applyLocalizedCopy(SECTION_COPY, "atmosphereLabel", settings.atmosphere?.label);
+  applyLocalizedCopy(SECTION_COPY, "atmosphereTitle", settings.atmosphere?.title);
+  applyLocalizedCopy(SECTION_COPY, "atmosphereCopy", settings.atmosphere?.description);
+  applyLocalizedCopy(SECTION_COPY, "footerBrand", settings.footer?.brandText);
+  applyLocalizedCopy(SECTION_COPY, "location", settings.footer?.locationLabel);
+  applyLocalizedCopy(SECTION_COPY, "galleryLabel", settings.gallery?.label);
+  applyLocalizedCopy(SECTION_COPY, "galleryTitle", settings.gallery?.title);
+  applyLocalizedCopy(SECTION_COPY, "galleryDesc", settings.gallery?.description);
+  applyLocalizedCopy(SECTION_COPY, "bookLabel", settings.booking?.label);
+  applyLocalizedCopy(SECTION_COPY, "bookTitle", settings.booking?.title);
+  applyLocalizedCopy(SECTION_COPY, "bookCopy", settings.booking?.description);
+  applyLocalizedCopy(SECTION_COPY, "chatWhatsApp", settings.booking?.buttonLabel);
+
+  if (Array.isArray(settings.gallery?.eventCards)) {
+    en.eventCards = settings.gallery.eventCards
+      .map((item) => [item.label?.en, item.title?.en, item.description?.en])
+      .filter((item) => item.some(Boolean));
+    ar.eventCards = settings.gallery.eventCards
+      .map((item) => [item.label?.ar, item.title?.ar, item.description?.ar])
+      .filter((item) => item.some(Boolean));
+  }
+
+  applySanityImages(settings);
+}
+
+function normalizeSanityMenu(categories) {
+  sanityDebug("normalizeSanityMenu called", { categoriesLength: categories?.length, categories });
+  if (!Array.isArray(categories) || categories.length === 0) return;
+
+  MENU_CATEGORIES = categories
+    .filter((category) => category?.id)
+    .map((category) => ({
+      id: category.id,
+      tabLabel: category.tabLabel?.en || category.title?.en || category.id,
+      tabLabelAr: category.tabLabel?.ar || category.title?.ar || "",
+      title: category.title?.en || category.tabLabel?.en || category.id,
+      titleAr: category.title?.ar || category.tabLabel?.ar || "",
+      icon: MENU_ICONS[category.iconKey] || MENU_ICONS.sandwiches,
+      hidden: Boolean(category.hidden),
+      items: (category.items || []).map((item) => {
+        if (item && item.price != null && typeof item.price !== "string") {
+          sanityDebug("Menu item price type mismatch", {
+            category: category.id,
+            name: item.name,
+            priceType: typeof item.price,
+            priceValue: item.price,
+          });
+        }
+        if (item && item.price == null) {
+          sanityDebug("Menu item price missing", {
+            category: category.id,
+            name: item.name,
+            item,
+          });
+        }
+
+        return {
+          name: item.name?.en || "",
+          nameAr: item.name?.ar || "",
+          price: item.price || "",
+          tag: item.tag?.en || "",
+          tagAr: item.tag?.ar || "",
+          hidden: Boolean(item.hidden),
+        };
+      }),
+    }));
+}
+
+async function loadSanityContent() {
+  if (!SANITY_READY) {
+    console.warn("Sanity is not ready. Check sanity-config.js window.SANITY_PUBLIC values.", SANITY);
+    return;
+  }
+
+  sanityDebug("Sanity config", SANITY);
+  sanityDebug("Sanity ready", {
+    ready: SANITY_READY,
+    useCdn: SANITY.useCdn,
+    host: SANITY.useCdn === false ? "api" : "apicdn",
+  });
+
+  const query = `{
+    "settings": *[_type == "siteSettings"][0] {
+      ...,
+      hero {
+        ...,
+        "logoImageUrl": logoImage.asset->url
+      },
+      guestMoments {
+        ...,
+        moments[] {
+          ...,
+          "key": _key,
+          "imageUrl": image.asset->url,
+          "imageAlt": title
+        }
+      },
+      atmosphereImages[] {
+        ...,
+        "imageUrl": image.asset->url
+      },
+      gallery {
+        ...,
+        eventCards[] {
+          ...,
+          photos[] {
+            ...,
+            "imageUrl": image.asset->url
+          }
+        }
+      }
+    },
+    "menuCategories": *[_type == "menuCategory"] | order(order asc, title.en asc) {
+      "id": id.current,
+      tabLabel,
+      title,
+      iconKey,
+      hidden,
+      items[]{name, price, tag, hidden}
+    }
+  }`;
+
+  try {
+    const response = await fetch(sanityQueryUrl(query));
+    if (!response.ok) throw new Error(`Sanity responded ${response.status}`);
+    const payload = await response.json();
+    sanityDebug("Sanity payload", payload);
+    if (!payload?.result) {
+      sanityDebug("Sanity payload missing result object", payload);
+    }
+    if (!payload?.result?.menuCategories) {
+      sanityDebug("Sanity payload missing menuCategories", payload.result);
+    }
+    applySanitySiteSettings(payload.result?.settings);
+    normalizeSanityMenu(payload.result?.menuCategories);
+    sanityDebug("Applied Sanity settings and menu", {
+      settings: payload.result?.settings,
+      menuCategoryCount: payload.result?.menuCategories?.length,
+    });
+  } catch (error) {
+    console.warn("Sanity content could not be loaded. Using local fallback.", error, {
+      sanityConfig: SANITY,
+      queryUrl: sanityQueryUrl(query),
+    });
   }
 }
 
@@ -969,7 +1304,7 @@ const MENU_ICONS = {
   shisha: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2c0 0-2 3-2 5s2 3 2 5-2 3-2 5M8 4c0 0 2 2 2 4s-2 3-2 5 2 3 2 5"/><ellipse cx="12" cy="20" rx="5" ry="2"/></svg>`,
 };
 
-const MENU_CATEGORIES = [
+let MENU_CATEGORIES = [
   {
     id: "sandwiches",
     tabLabel: "Sandwiches",
@@ -1078,26 +1413,58 @@ function localizeMenuCategory(category, field) {
     return field === "tab" ? category.tabLabel : category.title;
   }
 
+  const arField = field === "tab" ? "tabLabelAr" : "titleAr";
   return (
+    category[arField] ||
     MENU_AR.categories[category.id]?.[field] ||
     category[field] ||
     category.title
   );
 }
 
-function localizeMenuItemText(value) {
-  return currentLanguage === "ar" ? MENU_AR.items[value] || value : value;
+function getMenuItemName(item) {
+  return Array.isArray(item) ? item[0] : item.name;
 }
 
-function localizeMenuTag(value) {
-  return currentLanguage === "ar" ? MENU_AR.tags[value] || value : value;
+function getMenuItemPrice(item) {
+  return Array.isArray(item) ? item[1] : item.price;
 }
 
-function createMenuItem([name, price, tag]) {
+function getMenuItemTag(item) {
+  return Array.isArray(item) ? item[2] : item.tag;
+}
+
+function localizeMenuItemText(item) {
+  const name = getMenuItemName(item);
+  if (currentLanguage === "ar" && !Array.isArray(item) && item.nameAr) {
+    return item.nameAr;
+  }
+  return currentLanguage === "ar" ? MENU_AR.items[name] || name : name;
+}
+
+function localizeMenuTag(item) {
+  const tag = getMenuItemTag(item);
+  if (currentLanguage === "ar" && !Array.isArray(item) && item.tagAr) {
+    return item.tagAr;
+  }
+  return currentLanguage === "ar" ? MENU_AR.tags[tag] || tag : tag;
+}
+
+function createMenuItem(itemData) {
+  const name = getMenuItemName(itemData);
+  const price = getMenuItemPrice(itemData);
+  const tag = getMenuItemTag(itemData);
   const item = document.createElement("div");
   item.className = "menu-item";
   item.dataset.searchText = normalizeMenuText(
-    [name, tag, MENU_AR.items[name], MENU_AR.tags[tag]]
+    [
+      name,
+      tag,
+      !Array.isArray(itemData) && itemData.nameAr,
+      !Array.isArray(itemData) && itemData.tagAr,
+      MENU_AR.items[name],
+      MENU_AR.tags[tag],
+    ]
       .filter(Boolean)
       .join(" "),
   );
@@ -1110,7 +1477,7 @@ function createMenuItem([name, price, tag]) {
 
   const itemName = document.createElement("div");
   itemName.className = "menu-item-name";
-  itemName.textContent = localizeMenuItemText(name);
+  itemName.textContent = localizeMenuItemText(itemData);
   top.appendChild(itemName);
 
   if (price) {
@@ -1122,7 +1489,7 @@ function createMenuItem([name, price, tag]) {
 
   const itemTag = document.createElement("span");
   itemTag.className = "menu-item-tag";
-  itemTag.textContent = localizeMenuTag(tag);
+  itemTag.textContent = localizeMenuTag(itemData);
 
   body.append(top, itemTag);
   item.appendChild(body);
@@ -1138,7 +1505,15 @@ function renderMenu() {
   tabBar.textContent = "";
   sections.textContent = "";
 
-  MENU_CATEGORIES.forEach((category) => {
+  const visibleCategories = MENU_CATEGORIES.filter(
+    (category) => category && category.id && !category.hidden,
+  );
+
+  if (!visibleCategories.some((category) => category.id === currentMenuTab)) {
+    currentMenuTab = visibleCategories[0]?.id || currentMenuTab;
+  }
+
+  visibleCategories.forEach((category) => {
     const tab = document.createElement("button");
     tab.className = "tab-btn";
     tab.type = "button";
@@ -1163,7 +1538,9 @@ function renderMenu() {
 
     const grid = document.createElement("div");
     grid.className = "menu-grid";
-    category.items.forEach((item) => grid.appendChild(createMenuItem(item)));
+    (category.items || [])
+      .filter((item) => !item.hidden)
+      .forEach((item) => grid.appendChild(createMenuItem(item)));
 
     section.append(title, grid);
     sections.appendChild(section);
@@ -1796,7 +2173,8 @@ function handleGalleryStackKey(event, stack) {
 // INIT ON DOM READY
 // ─────────────────────────────────────────────
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
+  await loadSanityContent();
   hydrateVenueDetails();
   setLanguage(currentLanguage, { persist: false });
   initDeclarativeActions();

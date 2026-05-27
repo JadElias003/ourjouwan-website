@@ -1,0 +1,19 @@
+{
+  "name": "ourjouwan-sanity-studio",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "sanity dev --host 0.0.0.0",
+    "start": "sanity start",
+    "deploy": "sanity deploy",
+    "dataset:import": "sanity dataset import seed.ndjson production --replace"
+  },
+  "dependencies": {
+    "@sanity/vision": "5.26.0",
+    "sanity": "5.26.0",
+    "styled-components": "6.4.2"
+  },
+  "devDependencies": {
+    "@sanity/cli": "6.6.0"
+  }
+}
