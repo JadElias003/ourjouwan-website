@@ -1,0 +1,15 @@
+# Automatically normalize line endings for all text files
+* text=auto
+
+# Explicitly set line endings for common file types to CRLF on Windows
+*.js text eol=crlf
+*.json text eol=crlf
+*.html text eol=crlf
+*.css text eol=crlf
+*.md text eol=crlf
+*.ndjson text eol=crlf
+
+# Ensure binary files are not treated as text
+*.png binary
+*.jpg binary
+*.gif binary
